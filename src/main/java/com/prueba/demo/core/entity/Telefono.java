@@ -11,26 +11,29 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "USUARIO")
+@Table(name = "TELEFONO")
 @Setter
 @Getter
-public class Usuario {
-
+public class Telefono {
+    
      @Column(name = "id")
      @Id
      private String id;
 
-     @Column(name = "name")
-     private String name;
+     @Column(name = "id_user")
+     private String idUser;
 
-     @Column(name = "email")
-     private String email;
+     @Column(name = "num_tel")
+     private String number;
+
+     @Column(name = "city_code")
+     private String cityCode;
+
+     @Column(name = "country_code")
+     private String countryCode;
 
      @Column(name = "active")
      private Integer active;
-     
-     @Column(name = "password")
-     private String password;
 
      @Column(name = "date_create")
      private LocalDateTime dateCreate;    
@@ -40,6 +43,5 @@ public class Usuario {
 
      @Column(name = "date_last_login")
      private LocalDateTime dateLastLogin;
-     
      
 }
