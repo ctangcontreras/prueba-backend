@@ -18,6 +18,7 @@ import com.prueba.demo.repository.TelefonoRepository;
 import com.prueba.demo.repository.UsuarioRepository;
 import com.prueba.demo.service.DemoService;
 import com.prueba.demo.support.dto.DtoResponse;
+import com.prueba.demo.support.dto.JwtUtil;
 import com.prueba.demo.support.dto.Respuesta;
 import com.prueba.demo.support.dto.UsuarioDto;
 import com.prueba.demo.support.dto.UsuarioDto.TelefonoDto;
@@ -130,8 +131,10 @@ public class DemoServiceImpl implements DemoService {
 			telefonoRepository.save(telefono);
 		}
 
+		String token = JwtUtil.createToken(usuarioSave.getId());
+
 		DtoResponse response = new DtoResponse(usuarioSave.getId(), formatLocalDate(usuarioSave.getDateCreate()),
-				usuarioSave.getActive(), formatLocalDate(usuarioSave.getDateModify()), formatLocalDate(usuarioSave.getDateLastLogin()));
+				usuarioSave.getActive(), formatLocalDate(usuarioSave.getDateModify()), formatLocalDate(usuarioSave.getDateLastLogin()), token);
 
 		return new Respuesta<>(true, response, "Se registró correctamente");
 	}
@@ -186,8 +189,10 @@ public class DemoServiceImpl implements DemoService {
 			telefonoRepository.save(telefono);
 		}
 
+		String token = JwtUtil.createToken(usuarioSave.getId());
+
 		DtoResponse response = new DtoResponse(usuarioSave.getId(), formatLocalDate(usuarioSave.getDateCreate()),
-				usuarioSave.getActive(), formatLocalDate(usuarioSave.getDateModify()), formatLocalDate(usuarioSave.getDateLastLogin()));
+				usuarioSave.getActive(), formatLocalDate(usuarioSave.getDateModify()), formatLocalDate(usuarioSave.getDateLastLogin()), token);
 
 		return new Respuesta<>(true, response, "Se actualizó correctamente");
 	}

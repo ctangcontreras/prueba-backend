@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordConstraint {
-    String message() default "La contraseña debe tener al menos una mayúscula, un número y un carácter especial";
+    String message() default "La contraseña debe ser de mínimo 8 dígitos y tener al menos una mayúscula, un número y un carácter especial";
 
     Class<?>[] groups() default {};
 
