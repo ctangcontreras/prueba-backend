@@ -26,6 +26,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			
 		</dependency>
 		 
 		<dependency>
@@ -90,7 +91,17 @@
 			<groupId>org.reactivestreams</groupId>
 			<artifactId>reactive-streams</artifactId>
 		</dependency>
+
+		<!-- agregado -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.1</version>
+			<scope>test</scope>
+		</dependency>
+
  
+ 		<!-- finalizado -->
 	</dependencies>
 
 	<build>

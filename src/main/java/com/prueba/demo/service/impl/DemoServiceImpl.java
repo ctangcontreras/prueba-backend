@@ -115,25 +115,28 @@ public class DemoServiceImpl implements DemoService {
 		Telefono telefono = new Telefono();
 		String idTelefonoGenerado = "";
 
-		for (TelefonoDto phone : dto.getPhones()) {
-			telefono = new Telefono();
-			idTelefonoGenerado = "";
-
-			uuid = UUID.randomUUID();
-        	idTelefonoGenerado = uuid.toString();
-			phone.setId(idTelefonoGenerado);
-			
-			telefono.setId(phone.getId());
-			telefono.setIdUser(usuarioSave.getId());
-			telefono.setNumber(phone.getNumber());
-			telefono.setCityCode(phone.getCityCode());
-			telefono.setCountryCode(phone.getCountryCode());
-			telefono.setActive(phone.getActive());
-			telefono.setDateCreate(usuarioSave.getDateCreate());
-			telefono.setDateModify(usuarioSave.getDateModify());
-			telefono.setDateLastLogin(usuarioSave.getDateLastLogin());
-			telefonoRepository.save(telefono);
+		if (dto.getPhones()!=null && !dto.getPhones().isEmpty()) {
+			for (TelefonoDto phone : dto.getPhones()) {
+				telefono = new Telefono();
+				idTelefonoGenerado = "";
+	
+				uuid = UUID.randomUUID();
+				idTelefonoGenerado = uuid.toString();
+				phone.setId(idTelefonoGenerado);
+				
+				telefono.setId(phone.getId());
+				telefono.setIdUser(usuarioSave.getId());
+				telefono.setNumber(phone.getNumber());
+				telefono.setCityCode(phone.getCityCode());
+				telefono.setCountryCode(phone.getCountryCode());
+				telefono.setActive(phone.getActive());
+				telefono.setDateCreate(usuarioSave.getDateCreate());
+				telefono.setDateModify(usuarioSave.getDateModify());
+				telefono.setDateLastLogin(usuarioSave.getDateLastLogin());
+				telefonoRepository.save(telefono);
+			}
 		}
+		
 
 		UserDetail detail = new UserDetail();
 		detail.setEmail(dto.getEmail());
@@ -178,24 +181,26 @@ public class DemoServiceImpl implements DemoService {
 		Telefono telefono = new Telefono();
 		String idTelefonoGenerado = "";
 
-		for (TelefonoDto phone : dto.getPhones()) {
-			telefono = new Telefono();
-			idTelefonoGenerado = "";
-			if (phone.getId()==null || phone.getId().equals("")) {
-				uuid = UUID.randomUUID();
-        		idTelefonoGenerado = uuid.toString();
-				phone.setId(idTelefonoGenerado);
+		if (dto.getPhones()!=null && !dto.getPhones().isEmpty()) {
+			for (TelefonoDto phone : dto.getPhones()) {
+				telefono = new Telefono();
+				idTelefonoGenerado = "";
+				if (phone.getId()==null || phone.getId().equals("")) {
+					uuid = UUID.randomUUID();
+					idTelefonoGenerado = uuid.toString();
+					phone.setId(idTelefonoGenerado);
+				}
+				telefono.setId(phone.getId());
+				telefono.setIdUser(usuarioSave.getId());
+				telefono.setNumber(phone.getNumber());
+				telefono.setCityCode(phone.getCityCode());
+				telefono.setCountryCode(phone.getCountryCode());
+				telefono.setActive(phone.getActive());
+				telefono.setDateCreate(usuarioSave.getDateCreate());
+				telefono.setDateModify(usuarioSave.getDateModify());
+				telefono.setDateLastLogin(usuarioSave.getDateLastLogin());
+				telefonoRepository.save(telefono);
 			}
-			telefono.setId(phone.getId());
-			telefono.setIdUser(usuarioSave.getId());
-			telefono.setNumber(phone.getNumber());
-			telefono.setCityCode(phone.getCityCode());
-			telefono.setCountryCode(phone.getCountryCode());
-			telefono.setActive(phone.getActive());
-			telefono.setDateCreate(usuarioSave.getDateCreate());
-			telefono.setDateModify(usuarioSave.getDateModify());
-			telefono.setDateLastLogin(usuarioSave.getDateLastLogin());
-			telefonoRepository.save(telefono);
 		}
 
 		String token = jwtUtil.createToken(usuarioSave.getId());
@@ -213,7 +218,9 @@ public class DemoServiceImpl implements DemoService {
 		usuario.setDateLastLogin(LocalDateTime.now());
 		Usuario usuarioUpdate = usuarioRepository.save(usuario);
 
-		DtoResponse response = new DtoResponse(usuarioUpdate.getId(), formatLocalDate(usuarioUpdate.getDateLastLogin()));
+		String token = jwtUtil.createToken(usuarioUpdate.getId());
+
+		DtoResponse response = new DtoResponse(usuarioUpdate.getId(), formatLocalDate(usuarioUpdate.getDateLastLogin()), token);
 		return new Respuesta<>(true, response, "Se inició sesión correctamente");
 	}
 

@@ -27,9 +27,10 @@ public class DtoResponse {
         this.token = token;
     }
 
-    public DtoResponse(String id, String last_login) {
+    public DtoResponse(String id, String last_login, String token) {
         this.id = id;
         this.last_login = last_login;
+        this.token = token;
     }
     
 
