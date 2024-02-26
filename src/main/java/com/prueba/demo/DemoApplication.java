@@ -47,6 +47,15 @@ public class DemoApplication extends SpringBootServletInitializer  {
 					.authorizeRequests()
 					.antMatchers(HttpMethod.POST, "/demo/**").permitAll()
 					.antMatchers(HttpMethod.GET, "/demo/**").permitAll() 
+					.antMatchers(HttpMethod.GET, "/swagger-ui.html/**").permitAll() 
+					.antMatchers(HttpMethod.POST, "/swagger-ui.html/**").permitAll() 
+					.antMatchers(HttpMethod.GET,"/swagger-resources/**").permitAll()
+					.antMatchers(HttpMethod.GET,"/swagger-ui/**").permitAll()
+					.antMatchers(HttpMethod.GET,"/v2/api-docs/**").permitAll()
+					.antMatchers(HttpMethod.GET,"/springfox-swagger/**").permitAll()
+					.antMatchers(HttpMethod.GET,"/webjar/**").permitAll()
+					.antMatchers(HttpMethod.GET,"/webjars/**").permitAll()
+
 					.anyRequest()
 					
 					.authenticated();
