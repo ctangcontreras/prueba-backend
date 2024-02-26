@@ -20,6 +20,7 @@ import com.prueba.demo.service.DemoService;
 import com.prueba.demo.support.dto.DtoResponse;
 import com.prueba.demo.support.dto.JwtUtil;
 import com.prueba.demo.support.dto.Respuesta;
+import com.prueba.demo.support.dto.UserDetail;
 import com.prueba.demo.support.dto.UsuarioDto;
 import com.prueba.demo.support.dto.UsuarioDto.TelefonoDto;
 
@@ -34,6 +35,9 @@ public class DemoServiceImpl implements DemoService {
 
 	@Autowired
 	TelefonoRepository telefonoRepository;
+
+	@Autowired
+	JwtUtil jwtUtil;
 
 	@Override
 	public Respuesta<?> getListarUsuario() throws Exception {
@@ -131,7 +135,12 @@ public class DemoServiceImpl implements DemoService {
 			telefonoRepository.save(telefono);
 		}
 
-		String token = JwtUtil.createToken(usuarioSave.getId());
+		UserDetail detail = new UserDetail();
+		detail.setEmail(dto.getEmail());
+		detail.setName(dto.getName());
+		detail.setId(usuarioSave.getId());
+
+		String token = jwtUtil.createToken(usuarioSave.getId());
 
 		DtoResponse response = new DtoResponse(usuarioSave.getId(), formatLocalDate(usuarioSave.getDateCreate()),
 				usuarioSave.getActive(), formatLocalDate(usuarioSave.getDateModify()), formatLocalDate(usuarioSave.getDateLastLogin()), token);
@@ -189,7 +198,7 @@ public class DemoServiceImpl implements DemoService {
 			telefonoRepository.save(telefono);
 		}
 
-		String token = JwtUtil.createToken(usuarioSave.getId());
+		String token = jwtUtil.createToken(usuarioSave.getId());
 
 		DtoResponse response = new DtoResponse(usuarioSave.getId(), formatLocalDate(usuarioSave.getDateCreate()),
 				usuarioSave.getActive(), formatLocalDate(usuarioSave.getDateModify()), formatLocalDate(usuarioSave.getDateLastLogin()), token);

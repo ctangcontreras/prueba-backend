@@ -5,21 +5,19 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.prueba.demo.core.entity.Usuario;
 import com.prueba.demo.service.DemoService;
+import com.prueba.demo.support.dto.Respuesta;
 import com.prueba.demo.support.dto.UsuarioDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/demo")
@@ -30,33 +28,32 @@ public class DemoController {
 
 	@Autowired
 	private DemoService demoService;
-	
-	@ApiOperation(value = "listar Usuario")
-	@RequestMapping(value = "/getListarUsuario", method = RequestMethod.GET)
-	public ResponseEntity<Object> getListaParametro() {
-		
-		try {
-			return ResponseEntity.ok(demoService.getListarUsuario());
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return ResponseEntity.ok(e);
-		}
-	}
-
+ 
 	@ApiOperation(value = "Registra y actualiza usuario")
 	@RequestMapping(value = "/addUsuario", method = RequestMethod.POST)
 	public ResponseEntity<Object> addUsuario(@Valid @RequestBody UsuarioDto dto) {
 		
+		Respuesta<?> respuesta = null;
+
 		try {
 			if (dto.getId()!=null && !dto.getId().equals("")) {
+
+				respuesta = demoService.updateUsuario(dto);
 				return ResponseEntity.ok(demoService.updateUsuario(dto));
 			} else {
-				return ResponseEntity.ok(demoService.addUsuario(dto));
+				respuesta = demoService.addUsuario(dto);
 			}
 			
+
+			if (respuesta.isSuccess()) {				
+				return ResponseEntity.ok(demoService.updateUsuario(dto));
+			}else{
+				return new org.springframework.http.ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
+			}
+
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			return ResponseEntity.ok(e);
+			return new org.springframework.http.ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 
