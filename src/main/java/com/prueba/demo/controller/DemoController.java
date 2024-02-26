@@ -37,16 +37,13 @@ public class DemoController {
 
 		try {
 			if (dto.getId()!=null && !dto.getId().equals("")) {
-
 				respuesta = demoService.updateUsuario(dto);
-				return ResponseEntity.ok(demoService.updateUsuario(dto));
 			} else {
 				respuesta = demoService.addUsuario(dto);
 			}
-			
 
 			if (respuesta.isSuccess()) {				
-				return ResponseEntity.ok(demoService.updateUsuario(dto));
+				return ResponseEntity.ok(respuesta);
 			}else{
 				return new org.springframework.http.ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
 			}

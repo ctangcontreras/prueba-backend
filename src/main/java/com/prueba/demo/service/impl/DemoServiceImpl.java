@@ -91,7 +91,7 @@ public class DemoServiceImpl implements DemoService {
 
 		List<Usuario> validarCorreo = usuarioRepository.findByEmail(dto.getEmail());
 		if (validarCorreo!=null && !validarCorreo.isEmpty()) {
-			return new Respuesta<>(false, null, "El correo ya registrado");
+			return new Respuesta<>(false, null, "El correo ya fue registrado");
 		}
 
 
@@ -143,7 +143,7 @@ public class DemoServiceImpl implements DemoService {
 		String token = jwtUtil.createToken(usuarioSave.getId());
 
 		DtoResponse response = new DtoResponse(usuarioSave.getId(), formatLocalDate(usuarioSave.getDateCreate()),
-				usuarioSave.getActive(), formatLocalDate(usuarioSave.getDateModify()), formatLocalDate(usuarioSave.getDateLastLogin()), token);
+				usuarioSave.getActive(), usuarioSave.getDateModify()!=null ?(formatLocalDate(usuarioSave.getDateModify())) : null, formatLocalDate(usuarioSave.getDateLastLogin()), token);
 
 		return new Respuesta<>(true, response, "Se registró correctamente");
 	}

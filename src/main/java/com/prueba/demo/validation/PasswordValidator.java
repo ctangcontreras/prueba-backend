@@ -2,11 +2,18 @@ package com.prueba.demo.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.regex.Pattern;
 
+@Component
 public class PasswordValidator implements ConstraintValidator<PasswordConstraint, String> {
 
-    private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$";
+    
+    @Value("${password.pattern}")
+    private String PASSWORD_PATTERN;
 
     @Override
     public void initialize(PasswordConstraint constraint) {
